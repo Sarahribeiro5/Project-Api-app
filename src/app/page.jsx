@@ -5,18 +5,18 @@ import { useState } from 'react'
 import axios from 'axios'
 
 export default function Page() {
-  const [jogos, setJogos] = useState([])
+  const [personagens, setPersonagens] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const buscarJogos = async () => {
+  const buscarPersonagens = async () => {
     setLoading(true)
     try {
-      const response = await axios.get('https://api.sampleapis.com/switch/games')
+      const response = await axios.get('http://localhost:5000/personagens') // Altere o endpoint conforme necessário
       const data = response.data;
-      setJogos(data)
+      setPersonagens(data)
       console.table(data)
     } catch (error) {
-      console.error('Erro ao buscar jogos:', error)
+      console.error('Erro ao buscar personagens:', error)
     } finally {
       setLoading(false)
     }
@@ -41,20 +41,20 @@ export default function Page() {
         <p className="italic text-lg">"O sucesso é a soma de pequenos esforços repetidos dia após dia." - Robert Collier</p>
       </div>
 
-      {/* Botão para buscar jogos */}
+      {/* Botão para buscar personagens */}
       <div className="text-center mb-12">
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={buscarJogos} disabled={loading}>
-          {loading ? "Carregando..." : "Buscar Jogos"}
+        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={buscarPersonagens} disabled={loading}>
+          {loading ? "Carregando..." : "Buscar Personagens"}
         </button>
       </div>
 
-      {/* Lista de jogos */}
+      {/* Lista de personagens */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {jogos.map((jogo) => (
-          <div className="bg-white p-6 rounded-lg shadow-md" key={jogo.id}>
-            <h3 className="font-bold text-lg text-gray-800">{jogo.name}</h3>
-            <p className="text-gray-600">Gênero: {jogo.genre}</p>
-            <p className="text-gray-600">Desenvolvedores: {jogo.developers}</p>
+        {personagens.map((personagem) => (
+          <div className="bg-white p-6 rounded-lg shadow-md" key={personagem.id}>
+            <h3 className="font-bold text-lg text-gray-800">{personagem.nome}</h3>
+            <p className="text-gray-600">Idade: {personagem.idade}</p>
+            <p className="text-gray-600">Características: {personagem.características}</p>
           </div>
         ))}
       </div>
